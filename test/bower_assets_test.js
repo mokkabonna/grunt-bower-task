@@ -228,5 +228,42 @@ exports.bower_assets = {
     this.bowerCommands.list.emit('end', {
       "jquery": path.normalize("bower_components/jquery/jquery.js"),
     });
+  },
+
+  supports_multiple_main_files: function(test) {
+    test.expect(1);
+
+    var expected = {
+      __untyped__: {
+        "bootstrap": [
+          path.join(__dirname, "fixtures/supports_multiple_main_files/bower_components/bootstrap/bootstrap.js"),
+          path.join(__dirname, "fixtures/supports_multiple_main_files/bower_components/bootstrap/bootstrap.css")
+        ]
+      }
+    };
+
+    var bower = require("bower");
+    //set real bower config dir
+    bower.config.directory = 'test/fixtures/supports_multiple_main_files/bower_components';
+
+    this.bower.config.directory = 'bower_components';
+    this.bower.config.json = 'bower.json';
+
+    verify(
+      'supports_multiple_main_files',
+      'should split the files reported from bower',
+      expected,
+      test,
+      this.bower);
+
+    //do an actual reading of the main file
+    var paths = bower.commands.list({
+      paths: true
+    });
+
+    //on done just pass the data along
+    paths.on('end', function(data) {
+      this.bowerCommands.list.emit('end', data);
+    }.bind(this));
   }
 };

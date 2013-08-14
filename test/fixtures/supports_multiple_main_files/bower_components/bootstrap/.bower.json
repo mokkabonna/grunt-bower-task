@@ -1,0 +1,5 @@
+{
+	"name" : "bootstrap",
+	"version" : "2.2.0",
+	"main" : ["bootstrap.js", "bootstrap.css"]
+}

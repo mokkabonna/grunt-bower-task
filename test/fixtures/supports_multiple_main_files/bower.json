@@ -1,0 +1,7 @@
+{
+    "name": "support_bower_components_folder",
+    "version": "0.0.0",
+    "dependencies": {
+        "bootstrap": "2.2.0"
+    }
+}

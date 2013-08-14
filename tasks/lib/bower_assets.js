@@ -51,6 +51,13 @@ BowerAssets.prototype.get = function() {
 
   var paths = bower.commands.list({paths: true});
   paths.on('end', function(data) {
+    for (var prop in data) {
+      if (Array.isArray(data[prop])) {
+        continue;
+      }
+      //split the data received from bower if a comma separated string
+      data[prop] = data[prop].split(',');
+    }
     this.emit('end', this.mergePaths(data, exportsOverride ? exportsOverride : {}));
   }.bind(this));
   paths.on('error', function(err) {
